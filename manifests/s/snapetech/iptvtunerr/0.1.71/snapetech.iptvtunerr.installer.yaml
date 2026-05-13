@@ -1,0 +1,19 @@
+# Created using wingetcreate 1.12.8.0
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.6.0.schema.json
+
+PackageIdentifier: snapetech.iptvtunerr
+PackageVersion: 0.1.71
+InstallerType: zip
+NestedInstallerType: portable
+NestedInstallerFiles:
+- RelativeFilePath: iptv-tunerr-v0.1.71-windows-amd64.exe
+  PortableCommandAlias: iptv-tunerr
+Commands:
+- iptv-tunerr
+Installers:
+- Architecture: x64
+  InstallerUrl: https://github.com/snapetech/iptvtunerr/releases/download/v0.1.71/iptv-tunerr-v0.1.71-windows-amd64.zip
+  InstallerSha256: 32e09ac4b15abfc4dbc914f220d8eadd9b9933f53977b325ddf2f60d814b276a
+ManifestType: installer
+ManifestVersion: 1.6.0
+ReleaseDate: 2026-05-13
