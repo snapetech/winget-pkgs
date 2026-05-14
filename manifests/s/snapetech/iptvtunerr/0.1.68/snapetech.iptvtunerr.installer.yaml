@@ -6,7 +6,7 @@ PackageVersion: 0.1.68
 InstallerType: zip
 NestedInstallerType: portable
 NestedInstallerFiles:
-- RelativeFilePath: iptv-tunerr-v0.1.68-windows-amd64.exe
+- RelativeFilePath: iptv-tunerr-v0.1.68-windows-amd64/iptv-tunerr.exe
   PortableCommandAlias: iptv-tunerr
 Commands:
 - iptv-tunerr
