@@ -34,81 +34,14 @@ name: Spell Checking
 #   For background, see: https://github.com/check-spelling/check-spelling/wiki/Feature:-Update-with-deploy-key
 
 on:
-  push:
-    branches:
-      - "**"
-    tags-ignore:
-      - "**"
-  pull_request_target:
-    branches:
-      - "**"
-    tags-ignore:
-      - "**"
-    types:
-      - 'opened'
-      - 'reopened'
-      - 'synchronize'
+  workflow_dispatch:
 
 jobs:
-  spelling:
-    name: Check Spelling
-    permissions:
-      contents: read
-      pull-requests: read
-      actions: read
-    outputs:
-      followup: ${{ steps.spelling.outputs.followup }}
+  disabled:
+    name: Spell Checking Disabled
     runs-on: ubuntu-latest
-    if: "contains(github.event_name, 'pull_request') || github.event_name == 'push'"
-    concurrency:
-      group: spelling-${{ github.event.pull_request.number || github.ref }}
-      # note: If you use only_check_changed_files, you do not want cancel-in-progress
-      cancel-in-progress: true
     steps:
-    - name: check-spelling
-      id: spelling
-      uses: check-spelling/check-spelling@v0.0.26
-      with:
-        suppress_push_for_open_pull_request: 1
-        checkout: true
-        check_file_names: 1
-        spell_check_this: check-spelling/spell-check-this@prerelease
-        post_comment: 0
-        use_magic_file: 1
-        extra_dictionary_limit: 10
-        extra_dictionaries:
-          cspell:software-terms/src/software-terms.txt
-          cspell:filetypes/filetypes.txt
-        check_extra_dictionaries: ''
-
-  comment-push:
-    name: Report (Push)
-    # If your workflow isn't running on push, you can remove this job
-    runs-on: ubuntu-latest
-    needs: spelling
-    permissions:
-      contents: write
-    if: (success() || failure()) && needs.spelling.outputs.followup && github.event_name == 'push'
-    steps:
-    - name: comment
-      uses: check-spelling/check-spelling@v0.0.26
-      with:
-        checkout: true
-        spell_check_this: check-spelling/spell-check-this@prerelease
-        task: ${{ needs.spelling.outputs.followup }}
-
-  comment-pr:
-    name: Report (PR)
-    # If you workflow isn't running on pull_request*, you can remove this job
-    runs-on: ubuntu-latest
-    needs: spelling
-    permissions:
-      pull-requests: write
-    if: (success() || failure()) && needs.spelling.outputs.followup && contains(github.event_name, 'pull_request')
-    steps:
-    - name: comment
-      uses: check-spelling/check-spelling@v0.0.26
-      with:
-        checkout: true
-        spell_check_this: check-spelling/spell-check-this@prerelease
-        task: ${{ needs.spelling.outputs.followup }}
+      - name: Disabled pending safe check-spelling release
+        run: |
+          echo "Automatic spell checking is disabled because check-spelling/check-spelling v0.0.26 is under its security fail-safe."
+          echo "Re-enable this workflow only after a fixed check-spelling release is available."
